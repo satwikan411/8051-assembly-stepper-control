@@ -1,39 +1,42 @@
-# MPMC – Stepper Motor Interfacing
+# 8051 Stepper Motor Interfacing (Bare-Metal Assembly)
 
-**Name:** Satwika   
-**Subject:** MPMC Lab
+## 📌 Project Overview
+This project demonstrates low-level, register-based firmware development for the 8051 microcontroller (M51-02 Trainer Kit). The goal was to interface a 2-phase stepper motor and control its rotation using memory-mapped I/O. 
 
-## Objective
-To interface a stepper motor with the M51-02 trainer kit and write 8051 assembly programs to rotate the motor clockwise, anticlockwise, and in oscillation mode.
+*Note: This project demonstrates bare-metal architecture without an RTOS, directly manipulating MCU registers and external memory.*
 
-## Apparatus
-- M51-02 trainer kit
-- Stepper motor
-- Connecting wires
-- Power supply
+## 🛠️ Hardware & Software Used
+*   **Microcontroller:** 8051 (M51-02 Trainer Kit)
+*   **Actuator:** 2-Phase Stepper Motor
+*   **Language:** 8051 Assembly Language
+*   **Toolchain:** MCU 8051 IDE / Trainer Kit Assembler
 
-## Theory
-For 2-phase excitation, the switching sequence is:
+## ⚙️ Technical Implementation
+The stepper motor is driven using **2-phase excitation**. The switching sequence is:
+`0x0A (1010) -> 0x06 (0110) -> 0x05 (0101) -> 0x09 (1001)`
 
-`0AH → 06H → 05H → 09H`
+**Memory-Mapped I/O:** 
+Instead of standard GPIO pins, the 8051 interfaces with the motor driver via external memory. 
+*   **Port A Address:** `0xFF00`
+*   **Control Word Address:** `0xFF03`
 
-Clockwise rotation uses the sequence in this order. Anticlockwise rotation uses the reverse order.  
-Port A address: `FF00H`  
-Control word address: `FF03H`
+The assembly code uses the `MOVX` (Move External) instruction and the `DPTR` (Data Pointer) register to write the switching sequence to the external hardware, a crucial technique in bare-metal firmware development.
 
-## Files
-- [Clockwise code](code/clockwise.asm)
-- [Oscillation code](code/oscillation.asm)
+## 💻 The Code
+The repository contains two assembly programs:
+1.  **[Clockwise Rotation](code/clockwise.asm):** Executes the sequence forwards in an infinite loop.
+2.  **[Anticlockwise Rotation](code/anticlockwise.asm):** Executes the sequence in reverse.
 
-## Procedure
-1. Enter the assembly code using `ASM ORG 3000H`.
-2. Connect the stepper motor to the M51-02 trainer kit.
-3. Execute the program using `G` and the memory location.
-4. Observe the motor rotation.
+*Key instructions used: `MOV`, `MOVX`, `ACALL` (for delay subroutines), and `DJNZ` (for loop control).*
 
-## Results
-- [Anti-Clockwise rotation video](media/anticlockwise)
-- [Oscillation](media/oscillation)
+## 🚀 Procedure & Execution
+1.  Initialize the assembler at memory location `ORG 3000H`.
+2.  Input the assembly code.
+3.  Connect the stepper motor to the trainer kit.
+4.  Execute the code via the `G` (Go) command.
 
-## Conclusion
-The stepper motor was successfully interfaced with the 8051 trainer kit and rotated in clockwise and anticlockwise directions using assembly language programs.
+## 📸 Result
+*(Upload the picture of the stepper motor from your PDF into the `images` folder, then link it here like this:)*
+![Stepper Motor Result](images/stepper_motor.jpg)
+
+Upon execution, the stepper motor successfully rotates in the programmed direction, demonstrating precise timing control via software delay loops (`DELAY: MOV R7,#0FFH`).
