@@ -36,7 +36,6 @@ The repository contains two assembly programs:
 4.  Execute the code via the `G` (Go) command.
 
 ## Result
-*(Upload the picture of the stepper motor from your PDF into the `images` folder, then link it here like this:)*
 ![Stepper Motor Result for Anti-clockwise](media/anticlockwise)
 ![Stepper Motor Result for Oscillation](media/oscillation)
 
