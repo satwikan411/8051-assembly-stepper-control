@@ -1,7 +1,6 @@
 # MPMC – Stepper Motor Interfacing
 
-**Name:** Satwika  
-**Roll No:** 21EC01007  
+**Name:** Satwika   
 **Subject:** MPMC Lab
 
 ## Objective
